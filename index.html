@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>上海 INS 新乐园 (INS Park) 城市更新与商业定位深度剖析报告</title>
-    <meta name="description" content="上海黄浦复兴公园INS新乐园产权背景、城市更新改建难点、涉及单位、经营数据、小红书差评避雷分析与多媒体实景深度剖析报告">
+    <meta name="description" content="上海黄浦复兴公园INS新乐园产权背景、城市更新改建难点、涉及单位、经营数据、小红书差评避雷分析 with 多媒体实景深度剖析报告">
     
     <!-- 引入 Google Fonts & FontAwesome 图标 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,12 +51,16 @@
             padding: 0;
         }
 
-        body {
+        html, body {
             font-family: 'Outfit', 'Noto Sans SC', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-primary);
-            overflow-x: hidden;
+            overflow-x: hidden !important;
             line-height: 1.6;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         .neon-bg-glow {
@@ -92,6 +96,7 @@
                         url('http://www.archina.com/uploadWX/20231114/655333d31dd83169995157111911.jpeg') center/cover no-repeat;
             border-bottom: 2px solid var(--color-purple);
             box-shadow: 0 10px 30px rgba(189, 0, 255, 0.2);
+            width: 100%;
         }
 
         .hero::before {
@@ -139,6 +144,8 @@
             font-weight: 600;
             letter-spacing: 2px;
             text-shadow: 0 0 8px var(--glow-cyan);
+            white-space: normal; /* 强制手机端自适应折行 */
+            word-wrap: break-word;
         }
 
         .app-container {
@@ -149,6 +156,7 @@
             padding: 30px 20px;
             gap: 40px;
             position: relative;
+            width: 100%;
         }
 
         .sidebar {
@@ -213,6 +221,7 @@
         .content-area {
             position: relative;
             min-height: 500px;
+            width: 100%;
         }
 
         /* SPA 选项卡样式 */
@@ -226,6 +235,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            width: 100%;
             animation: paneFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
@@ -412,9 +422,7 @@
             color: var(--text-secondary);
         }
 
-        /* ------------------------------------------------------------- */
-        /* 手风琴折叠面板 (Accordion) 样式 */
-        /* ------------------------------------------------------------- */
+        /* 手风琴折叠面板 */
         .accordion-wrapper {
             margin: 25px 0;
             display: flex;
@@ -465,7 +473,6 @@
             font-size: 0.95rem;
         }
 
-        /* 激活状态 */
         .accordion-item.active {
             border-color: rgba(0, 240, 255, 0.3);
             background: rgba(0, 240, 255, 0.01);
@@ -486,9 +493,7 @@
             transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
         }
 
-        /* ------------------------------------------------------------- */
-        /* 图片轮播图 (Carousel) 样式 */
-        /* ------------------------------------------------------------- */
+        /* 图片轮播图 */
         .carousel-wrapper {
             position: relative;
             width: 100%;
@@ -777,11 +782,22 @@
         /* 移动端/手机端极致自适应框架 (SPA App 风格) */
         /* ------------------------------------------------------------- */
         @media (max-width: 992px) {
+            html, body {
+                max-width: 100vw;
+                overflow-x: hidden;
+                position: relative;
+                width: 100%;
+            }
             .hero {
                 height: 25vh; /* 手机端大幅减小封面占用空间 */
+                max-width: 100vw;
+                overflow: hidden;
             }
             .hero-content {
-                padding: 10px;
+                padding: 10px 20px;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
             }
             .tag-trend {
                 padding: 4px 12px;
@@ -794,19 +810,32 @@
             .hero-subtitle {
                 font-size: 0.8rem;
                 letter-spacing: 1px;
+                white-space: normal;
+                word-wrap: break-word;
+                word-break: break-all;
+                display: block;
+                width: 100%;
+            }
+
+            .neon-bg-glow {
+                display: none !important;
             }
 
             .app-container {
-                grid-template-columns: 1fr;
+                display: block; /* 改为 block 布局，杜绝 grid min-content 顶宽 bug */
                 padding: 0; /* 贴边以最大化视口空间 */
-                gap: 0;
+                width: 100vw !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
             }
 
             /* 手机端导航栏：改为顶部毛玻璃悬浮横滑Tab (原生App体验) */
             .sidebar {
                 position: sticky;
                 top: 0;
-                width: 100%;
+                width: 100vw !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
                 z-index: 1000;
                 margin-bottom: 0;
             }
@@ -819,6 +848,8 @@
                 background: rgba(8, 5, 18, 0.85);
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
+                max-width: 100%;
+                overflow: hidden;
             }
 
             .nav-card h3 {
@@ -829,9 +860,10 @@
                 display: flex;
                 overflow-x: auto;
                 white-space: nowrap;
-                padding: 12px 8px;
+                padding: 12px 10px;
                 gap: 6px;
                 -webkit-overflow-scrolling: touch; /* 流畅手势滚动 */
+                max-width: 100%;
             }
 
             /* 隐藏横向滚动条，但保留滚动功能 */
@@ -863,14 +895,19 @@
 
             /* 内容面板优化 */
             .content-area {
-                padding: 16px 10px 40px 10px; /* 侧边窄内边距 */
+                padding: 16px 12px 40px 12px; /* 侧边窄内边距 */
                 min-height: auto;
+                width: auto !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
             }
 
             .content-area section {
                 padding: 20px 15px;
                 border-radius: 16px;
                 border-color: rgba(255, 255, 255, 0.05);
+                width: auto !important;
+                max-width: 100% !important;
             }
 
             .section-title {
@@ -878,9 +915,7 @@
                 margin-bottom: 18px;
             }
 
-            /* ------------------------------------------------------------- */
             /* 手机端水平漏边卡片流 (Horizontal Card Flow)，杜绝竖排太长的问题 */
-            /* ------------------------------------------------------------- */
             .xhs-grid, .units-grid {
                 display: flex !important;
                 grid-template-columns: none !important;
@@ -890,6 +925,7 @@
                 padding: 4px 2px 16px 2px;
                 margin: 15px 0;
                 -webkit-overflow-scrolling: touch;
+                width: 100%;
             }
 
             .xhs-grid::-webkit-scrollbar, .units-grid::-webkit-scrollbar {
@@ -941,7 +977,7 @@
         <div class="hero-content">
             <span class="tag-trend">城市更新 & 潮流新商业</span>
             <h1 class="hero-title">上海 INS 新乐园</h1>
-            <p class="hero-subtitle">区位、改建难点、产权机制及多媒体剖析 (移动适配版)</p>
+            <p class="hero-subtitle">区位、改建难点、产权机制及多媒体剖析 (移动自适应)</p>
         </div>
     </header>
 
@@ -969,10 +1005,10 @@
             <section id="bg" class="active-section">
                 <h2 class="section-title"><i class="fa-solid fa-hotel"></i> 项目背景与详细区位</h2>
                 <p>
-                    <strong>上海 INS 新乐园</strong>（又名 INS 复兴·乐园，前身即著名的复兴广场），座落于上海市黄浦区雁荡路109号复兴公园东侧，处于<strong>衡复历史文化风貌区</strong>核心区。该地块原址为上世纪90年代起风靡上海的“钱柜 KTV 大楼”及周边配套设施，建筑面积约 <strong>2 万平方米</strong>，地上 6 层，地下 1 层。
+                    <strong>上海 INS 新乐园</strong>（又名 INS 复兴·乐园，前身即著名的复兴广场），座落于上海市黄浦区雁荡路109号复兴公园东侧，处于<strong>衡复历史文化风貌区</strong>核心区。该地块原址为上世纪90年代起风靡上海的“钱柜 KTV 大楼”及周边配套设施，建筑面积约 <strong>2 万平方米</strong>，地上 6 止，地下 1 层。
                 </p>
                 <p>
-                    <strong>黄金区位三角与物理边界：</strong> 项目地理位置极其特殊。它深嵌于百年法式风貌公园——复兴公园内，东接雁荡路休闲步行街，南临思南路与思南公馆，北侧距淮海中路核心高档商圈仅两百米之遥。这种“身处公园绿地内、紧邻风貌风情街区、直通顶级商圈”的独特地理格局，为其创造了独一无二的文旅磁场。然而，**衡复风貌保护区的严格限制**也带来极大的物理红线约束：狭窄的历史道路 and 步行街特征，导致其夜间数万人流的交通疏散和物资装卸（特别是夜店大体量的酒水和设备运输）空间极其狭窄。
+                    <strong>黄金区位三角与物理边界：</strong> 项目地理位置极其特殊。它深嵌于百年法式风貌公园——复兴公园内，东接雁荡路休闲步行街，南临思南路与思南公馆，北侧距淮海中路核心高档商圈仅两百米之遥。这种“身处公园绿地内、紧邻风貌风情街区、直通顶级商圈”的独特地理格局，为其创造了独一无二的文旅磁场。然而，**衡复风貌保护区的严格限制**也带来极大的物理红线约束：狭窄的历史道路与步行街特征，导致其夜间数万人流的交通疏散和物资装卸（特别是夜店大体量的酒水和设备运输）空间极其狭窄。
                 </p>
                 
                 <div class="units-grid">
@@ -1097,7 +1133,7 @@
                             大楼的核心人气引擎，采用<strong>通票畅玩（九店全通）</strong>模式：
                             <ul>
                                 <li><strong>HUSH：</strong>主打嘻哈音乐风格（Hip Hop）。</li>
-                                <li><strong>RADI：</strong>以主流电子音乐和流行混音为主。</li>
+                                <li><strong>RADI：</strong>以主流电子音乐和流行混音为主.</li>
                                 <li><strong>La Fin：</strong>欧美流行乐风主题酒吧。</li>
                                 <li><strong>KEZEE：</strong>顶级高规格音乐现场 Livehouse，一票难求。</li>
                                 <li><strong>PLAYGROUND / Dirty House：</strong>深耕独立电子和地下电子音乐风格。</li>
@@ -1494,7 +1530,9 @@
             }
         }
 
-        window.addEventListener('load', handleHashChange);
+        // 立即执行一次 Hash 路由初始化，不再等待 load 事件以防 Headless 截图错位
+        handleHashChange();
+
         window.addEventListener('hashchange', handleHashChange);
 
         // ------------------------------------------------------------- 
