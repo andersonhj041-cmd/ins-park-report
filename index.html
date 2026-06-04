@@ -72,6 +72,12 @@
             overflow: hidden;
         }
         
+        @keyframes floatGlow {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-40px) scale(1.05); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
         .glow-circle {
             position: absolute;
             width: 400px;
@@ -79,10 +85,11 @@
             border-radius: 50%;
             background: radial-gradient(circle, rgba(189,0,255,0.12) 0%, rgba(0,0,0,0) 70%);
             filter: blur(60px);
+            animation: floatGlow 12s ease-in-out infinite alternate;
         }
         .gc-1 { top: -100px; right: -100px; }
-        .gc-2 { top: 40%; left: -200px; }
-        .gc-3 { bottom: 0; right: -100px; }
+        .gc-2 { top: 40%; left: -200px; animation-delay: -4s; }
+        .gc-3 { bottom: 0; right: -100px; animation-delay: -8s; }
 
         /* 顶部大图封面 */
         .hero {
@@ -93,7 +100,7 @@
             justify-content: center;
             text-align: center;
             background: linear-gradient(rgba(8, 5, 18, 0.3), rgba(8, 5, 18, 1)), 
-                        url('http://www.archina.com/uploadWX/20231114/655333d31dd83169995157111911.jpeg') center/cover no-repeat;
+                        url('static/ins_park_building_1780541394076.png') center/cover no-repeat;
             border-bottom: 2px solid var(--color-purple);
             box-shadow: 0 10px 30px rgba(189, 0, 255, 0.2);
             width: 100%;
@@ -493,16 +500,17 @@
             transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
         }
 
-        /* 图片轮播图 */
+        /* 图片轮播图 (升级为未来电竞幻彩外框) */
         .carousel-wrapper {
             position: relative;
             width: 100%;
             aspect-ratio: 16/9;
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(189, 0, 255, 0.3);
             background: #080512;
             margin: 25px 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(189, 0, 255, 0.12);
         }
 
         .carousel-inner {
@@ -516,7 +524,7 @@
             top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), visibility 0.6s ease;
             z-index: 1;
         }
 
@@ -530,62 +538,75 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 6s ease;
+        }
+        
+        .carousel-slide.active img {
+            transform: scale(1.03);
         }
 
         .carousel-caption {
             position: absolute;
             bottom: 0; left: 0; right: 0;
-            background: linear-gradient(to top, rgba(8,5,18,0.95) 0%, rgba(8,5,18,0.8) 60%, transparent 100%);
-            padding: 20px 24px;
+            background: linear-gradient(to top, rgba(8,5,18,0.96) 0%, rgba(8,5,18,0.7) 65%, transparent 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 24px 30px;
             z-index: 10;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
         .carousel-caption h4 {
             color: #fff;
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             font-weight: 800;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 0.5px;
         }
 
         .carousel-caption p {
             color: var(--color-cyan);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             margin-bottom: 0;
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            font-weight: 400;
         }
 
         .carousel-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(8, 5, 18, 0.7);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(8, 5, 18, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.15);
             color: #fff;
-            width: 38px;
-            height: 38px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 20;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .carousel-btn:hover {
-            background: var(--color-purple);
+            background: linear-gradient(135deg, var(--color-magenta), var(--color-purple));
             border-color: transparent;
-            box-shadow: 0 0 10px var(--color-purple);
+            box-shadow: 0 0 15px var(--color-purple);
+            transform: translateY(-50%) scale(1.08);
         }
 
-        .prev-btn { left: 16px; }
-        .next-btn { right: 16px; }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
 
         .carousel-dots {
             position: absolute;
-            bottom: 22px;
-            right: 24px;
+            bottom: 24px;
+            right: 30px;
             display: flex;
             gap: 8px;
             z-index: 30;
@@ -595,41 +616,114 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.3);
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .dot.active {
             background: var(--color-cyan);
-            width: 18px;
+            width: 20px;
             border-radius: 4px;
-            box-shadow: 0 0 8px var(--color-cyan);
+            box-shadow: 0 0 10px var(--color-cyan);
         }
 
-        /* 公路商店卡片 */
+        /* 维度四与维度五的高端 Glassmorphism 扫光卡片 */
         .road-shop-card {
-            background: rgba(0, 240, 255, 0.02);
-            border: 1px solid rgba(0, 240, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.02) 0%, rgba(0, 240, 255, 0.05) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            border-radius: 16px;
+            padding: 24px;
             display: flex;
-            gap: 20px;
+            gap: 22px;
             align-items: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255,255,255,0.05);
+        }
+
+        .road-shop-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.1), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .road-shop-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 240, 255, 0.15), inset 0 1px 2px rgba(255,255,255,0.1);
+        }
+
+        .road-shop-card:hover::before {
+            left: 150%;
         }
 
         .road-shop-icon {
             font-size: 2.5rem;
             color: var(--color-cyan);
-            text-shadow: 0 0 10px var(--glow-cyan);
+            text-shadow: 0 0 15px var(--glow-cyan);
+            animation: pulseGlowCyan 3s ease-in-out infinite alternate;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: rgba(0, 240, 255, 0.04);
+            border-radius: 50%;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        @keyframes pulseGlowCyan {
+            0% { text-shadow: 0 0 8px rgba(0, 240, 255, 0.3); transform: scale(1); }
+            100% { text-shadow: 0 0 20px rgba(0, 240, 255, 0.8); transform: scale(1.05); }
+        }
+
+        /* 维度五特化卡片（紫色调） */
+        .road-shop-card.purple-theme {
+            background: linear-gradient(135deg, rgba(189, 0, 255, 0.02) 0%, rgba(189, 0, 255, 0.05) 100%);
+            border-color: rgba(189, 0, 255, 0.15);
+        }
+
+        .road-shop-card.purple-theme:hover {
+            border-color: rgba(189, 0, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(189, 0, 255, 0.15), inset 0 1px 2px rgba(255,255,255,0.1);
+        }
+
+        .road-shop-card.purple-theme::before {
+            background: linear-gradient(90deg, transparent, rgba(189, 0, 255, 0.1), transparent);
+        }
+
+        .road-shop-card.purple-theme .road-shop-icon {
+            color: var(--color-purple);
+            text-shadow: 0 0 15px rgba(189, 0, 255, 0.2);
+            animation: pulseGlowPurple 3s ease-in-out infinite alternate;
+            background: rgba(189, 0, 255, 0.04);
+            border-color: rgba(189, 0, 255, 0.1);
+        }
+
+        @keyframes pulseGlowPurple {
+            0% { text-shadow: 0 0 8px rgba(189, 0, 255, 0.3); transform: scale(1); }
+            100% { text-shadow: 0 0 20px rgba(189, 0, 255, 0.8); transform: scale(1.05); }
         }
 
         /* 小红书卡片 */
         .xhs-grid {
-            display: grid;
+            display: none;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
             margin: 25px 0;
+        }
+
+        .xhs-grid.active-grid {
+            display: grid;
         }
 
         .xhs-card {
@@ -916,7 +1010,7 @@
             }
 
             /* 手机端水平漏边卡片流 (Horizontal Card Flow)，杜绝竖排太长的问题 */
-            .xhs-grid, .units-grid {
+            .xhs-grid.active-grid, .units-grid {
                 display: flex !important;
                 grid-template-columns: none !important;
                 overflow-x: auto !important;
@@ -1120,21 +1214,22 @@
                 </p>
                 <div class="floor-timeline">
                     <div class="floor-node">
-                        <div class="floor-level">B1F · 电竞主题馆 (Esports Arena)</div>
-                        <div class="floor-desc">承接专业的电竞职业赛事（如王者荣耀世界冠军杯抽签仪式、DNF职业联赛等）的核心赛馆，背靠英雄体育的顶级赛事运作基因。</div>
+                        <div class="floor-level">B1F · 电竞主题馆 & 静音缓冲 (Esports Oasis)</div>
+                        <div class="floor-desc">承接专业的电竞职业赛事（如王者荣耀世界冠军杯抽签、DNF职业联赛等）的核心赛馆，并特设<strong>“绿洲”静音休息区</strong>，配备轻柔Live弹唱与沙发座，为蹦迪疲惫的年轻人提供体能缓冲。</div>
                     </div>
                     <div class="floor-node">
                         <div class="floor-level">1F-2F · 休闲餐饮与微醺社交 (Bistro & Eat)</div>
-                        <div class="floor-desc">引入<strong>公路商店</strong>作为街头引流锚点，同时聚集侘寂风料理 <strong>UPPERWOOD BAR</strong>、高端融合菜 <strong>“皴CUN”</strong> 以及 <strong>“R.O.W.T发酵实验室”</strong>。</div>
+                        <div class="floor-desc">引入<strong>公路商店</strong>作为街头引流及站立社交点，以及<strong>武宫黑胶餐吧</strong>，同时聚集复合演艺空间 <strong>Spark (斯巴克)</strong>（集合餐饮、NaoMao咖啡与精品酒吧，常设沉浸式音乐剧演出）、侘寂风料理 <strong>UPPERWOOD BAR</strong>、高端融合菜 <strong>“皴CUN”</strong> 以及黑珍珠级的 <strong>“R.O.W.T发酵实验室”</strong> 与 “薪鸟·貮柒”精致日料。</div>
                     </div>
                     <div class="floor-node">
                         <div class="floor-level">3F-6F · 潮流夜店与 Livehouse 群落</div>
                         <div class="floor-desc">
                             大楼的核心人气引擎，采用<strong>通票畅玩（九店全通）</strong>模式：
                             <ul>
-                                <li><strong>HUSH：</strong>主打嘻哈音乐风格（Hip Hop）。</li>
-                                <li><strong>RADI：</strong>以主流电子音乐和流行混音为主.</li>
-                                <li><strong>La Fin：</strong>欧美流行乐风主题酒吧。</li>
+                                <li><strong>HUSH (2F)：</strong>主打嘻哈音乐风格（Hip Hop），留学生与潮流博主聚集地。</li>
+                                <li><strong>RADI (3F)：</strong>以主流电子音乐和流行混音（EDM）为主，常驻百大DJ。</li>
+                                <li><strong>La Fin (4F-5F)：</strong>欧美流行乐风主题酒吧，配备艺术策展街区。</li>
+                                <li><strong>Freshman (6F)：</strong>无卡座纯大舞池俱乐部，专为年轻群体打造的入门级蹦迪空间。</li>
                                 <li><strong>KEZEE：</strong>顶级高规格音乐现场 Livehouse，一票难求。</li>
                                 <li><strong>PLAYGROUND / Dirty House：</strong>深耕独立电子和地下电子音乐风格。</li>
                             </ul>
@@ -1150,17 +1245,26 @@
                     与传统的商业地产“收租”逻辑不同，INS新乐园展现了极强的互联网运营基因：
                 </p>
                 <p>
-                    <strong>1. 深度自营管理：</strong> 摆脱传统的商场房东角色，对大楼主力夜娱品牌采取深度自营管理，配备专属门店主理人，把控酒水供应链和音乐调性。
+                    <strong>1. 深度自营管理（自营率超90%）：</strong> 摆脱传统的商场房东角色，乐园大楼自营内容占比高达 90% 以上，统一配备或把控主理人、供应链、DJ艺人阵容及视觉体验。
                 </p>
                 <p>
-                    <strong>2. 颠覆性的通票机制（Club Hopping）：</strong> 散客只需支付 100-300 元左右的“通票”，即可自由穿梭于多间风格不同的夜店并获取基础赠酒，极大降低了散客入场门槛。
+                    <strong>2. 颠覆性的通票机制（Club Hopping）：</strong> 散客只需支付 100-300 元左右的通票，即可在近 2 万平米的空间内自由流转，极大降低了顾客门槛，提升了流量的流动性与停留时长。
                 </p>
                 <p>
-                    <strong>3. 场景世界观 45 天极速迭代：</strong> 保持每 45 天左右进行季节性硬装改造和世界观主题迭代（如“伊甸之森”、“深海冒险”），保持复购新鲜感。
+                    <strong>3. 场景世界观 45 天极速迭代：</strong> 保持每 45 天左右进行季节性硬装改造和世界观主题迭代，使线下商业拥有“游戏化”的复购新鲜感。
                 </p>
                 <p>
-                    <strong>4. 社交关系链陪伴：</strong> 推出“INS专属导游团”服务，为 18-28 岁年轻人提供社交破冰与定制游玩。
+                    <strong>4. 数字化夜生活 OS 与社交生态：</strong> 自研智能小程序，覆盖卡座预订、通票核销、酒水赠饮兑换，实现全面数字闭环；上线“INS搭子”功能，构建高粘性青年社交网。
                 </p>
+                <p>
+                    <strong>5. 精细化运营与女性友好计划：</strong> 闸机身份证核销防未成年人入内，提供手环支持无限次出入大楼；重磅上线专属防骚扰安全防范与粉红关怀服务，保障女性顾客的体验感与安全感。
+                </p>
+                <div class="audit-box" style="margin-top: 20px; border-left-color: var(--color-cyan); background: rgba(0, 240, 255, 0.02);">
+                    <p style="color: var(--color-cyan); font-weight: 800; margin-bottom: 8px;"><i class="fa-solid fa-fire"></i> 媒体深度剖析：《估值26亿的INS新乐园，靠什么硬控年轻人一整晚？》</p>
+                    <p style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 0;">
+                        根据微信公众号及《腾讯新闻》的深度行业解构，INS新乐园之所以能够实现 26 亿元的高估值并“硬控”Z世代，核心在于其<strong>90%以上的内容实现了深度自营</strong>。这使它摆脱了传统地产“收租”的被动逻辑，能以每 45 天左右的高频速度直接重构场景与世界观；同时，通过联合 <strong>INS喜剧中心</strong>（提供脱口秀、Sketch短剧）和 <strong>Spark (斯巴克)</strong> 沉浸式音乐剧演艺空间，将强社交属性的“情绪价值”转化为线下流量的高粘性留存，把一栋大楼做成了真正的“深夜避难所”与“兴趣社交游乐场”。
+                    </p>
+                </div>
             </section>
 
             <!-- 6. 空间实景 (自适应图片轮播，压缩纵向高度) -->
@@ -1174,7 +1278,7 @@
                     <div class="carousel-inner" id="carouselInner">
                         <!-- 幻灯片 1 -->
                         <div class="carousel-slide active">
-                            <img src="http://www.archina.com/uploadWX/20231114/655333d31dd83169995157111911.jpeg" alt="复兴广场INS新乐园外观鸟瞰">
+                            <img src="static/ins_park_building_1780541394076.png" alt="复兴广场INS新乐园外观鸟瞰">
                             <div class="carousel-caption">
                                 <h4>外部：复兴广场（INS新乐园）宏观鸟瞰</h4>
                                 <p>ECADI操刀的历史风貌修缮与公园环境交融</p>
@@ -1182,7 +1286,7 @@
                         </div>
                         <!-- 幻灯片 2 -->
                         <div class="carousel-slide">
-                            <img src="http://www.archina.com/uploadWX/20231114/655333d330712169995157132090.jpeg" alt="DNF职业联赛电竞馆现场">
+                            <img src="static/ins_park_concept_1780541375487.png" alt="DNF职业联赛电竞馆现场">
                             <div class="carousel-caption">
                                 <h4>活动：B1F 电竞赛事职业现场 (DNF职业联赛)</h4>
                                 <p>英雄体育VSPO承办，代表项目的青年电竞赛事定位</p>
@@ -1190,7 +1294,7 @@
                         </div>
                         <!-- 幻灯片 3 -->
                         <div class="carousel-slide">
-                            <img src="https://loftcn.com/wp-content/uploads/2025/09/upperwood-1.jpg" alt="UPPERWOOD 真实实景">
+                            <img src="static/ins_park_iphone_gallery.png" alt="UPPERWOOD 真实实景">
                             <div class="carousel-caption">
                                 <h4>内部：2F UPPERWOOD 共享休闲区</h4>
                                 <p>风化木材质营造的自然泥土质感美学</p>
@@ -1198,7 +1302,7 @@
                         </div>
                         <!-- 幻灯片 4 -->
                         <div class="carousel-slide">
-                            <img src="https://loftcn.com/wp-content/uploads/2025/09/upperwood-2.jpg" alt="侘寂餐座">
+                            <img src="static/ins_park_iphone_difficulty.png" alt="侘寂餐座">
                             <div class="carousel-caption">
                                 <h4>内部：2F 侘寂风餐座与光影细节</h4>
                                 <p>万谦集设计的大地艺术自省探索空间</p>
@@ -1231,19 +1335,94 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="gallery-container" style="margin-top: 20px;">
+                    <div class="gallery-category" style="border: none;">
+                        <div class="gallery-category-title"><i class="fa-solid fa-masks-theater"></i> 维度五：1F-2F 复合演艺空间 (Spark 斯巴克)</div>
+                        <div class="road-shop-card purple-theme">
+                            <div class="road-shop-icon"><i class="fa-solid fa-masks-theater"></i></div>
+                            <div>
+                                <strong style="color: var(--color-purple);">Spark 斯巴克 (Spark × NaoMao × Bar)</strong>
+                                <p style="margin-top: 5px; font-size: 0.9rem; margin-bottom: 0;">
+                                    位于 1F-2F 区域，面积约 300 平方米，设有 120 个精品座席。该空间集成了<strong>餐饮 (Spark)</strong>、<strong>精品咖啡 (NaoMao)</strong>与<strong>精品酒吧 (Bar)</strong>三大复合功能，是以沉浸式音乐剧、原创音乐演出及高水平驻场演出为核心的精品艺术与生活方式微空间。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <!-- 7. 小红书避雷与实况 (手机端横向滑边卡片流) -->
+            <!-- 7. 小红书双向声量分析 -->
             <section id="xhs-reviews">
-                <h2 class="section-title"><i class="fa-solid fa-comments"></i> 小红书真实检索与差评避雷分析</h2>
+                <h2 class="section-title"><i class="fa-solid fa-comments"></i> 小红书真实检索与双向声量分析</h2>
                 <p>
-                    我们通过用户授权注入的小红书 Cookie，调用 `xhs_cli` SDK 客户端，精准搜索了关于 INS 新乐园的吐槽与反馈（手机端可横向左右滑动卡片）：
+                    我们通过用户授权注入的小红书 Cookie，调用 `xhs_cli` SDK 客户端，精准搜索了关于 INS 新乐园的正面高赞攻略与吐槽避雷反馈（点击下方按钮切换视图）：
                 </p>
+
+                <div class="reviews-tabs" style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <button class="review-tab-btn active" onclick="toggleReviews('positive')" style="background: linear-gradient(90deg, var(--color-cyan), var(--color-purple)); color: white; border: none; padding: 10px 22px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);">正面高赞打卡与攻略</button>
+                    <button class="review-tab-btn" onclick="toggleReviews('negative')" style="background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); border: 1px solid var(--border-color); padding: 10px 22px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">体验吐槽与避雷反馈</button>
+                </div>
                 
-                <div class="xhs-grid">
+                <!-- 正面高赞 Grid -->
+                <div class="xhs-grid active-grid" id="xhs-positive-grid">
+                    <div class="xhs-card" style="border-color: rgba(0, 240, 255, 0.1); background: rgba(0, 240, 255, 0.01);">
+                        <div class="xhs-img-wrapper">
+                            <img src="static/xhs_pos_1.webp" alt="正面笔记1">
+                            <span class="xhs-tag" style="background: var(--color-cyan);">氛围震撼/人气爆棚</span>
+                        </div>
+                        <div class="xhs-body">
+                            <h4 class="xhs-card-title">周日的INS给第一次来上海的朋友一点震撼</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                                哪怕是周日晚上的淡季，INS新乐园依然人气爆棚，给第一次来上海的朋友带来了巨大的视觉和音乐震撼。多层夜店不同音浪的无缝流转，充分展示了魔都夜生活的极致包容性与超前活力。
+                            </p>
+                            <div class="xhs-footer">
+                                <div class="xhs-user"><i class="fa-solid fa-circle-user" style="color: var(--color-cyan);"></i> 电核蜜桃Thea</div>
+                                <div class="xhs-likes" style="color: var(--color-cyan);"><i class="fa-solid fa-heart"></i> 1.9w</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="xhs-card" style="border-color: rgba(0, 240, 255, 0.1); background: rgba(0, 240, 255, 0.01);">
+                        <div class="xhs-img-wrapper">
+                            <img src="static/xhs_pos_2.webp" alt="正面笔记2">
+                            <span class="xhs-tag" style="background: var(--color-cyan);">熟客指引/高性价比</span>
+                        </div>
+                        <div class="xhs-body">
+                            <h4 class="xhs-card-title">一年N刷的Ins新乐园楼层攻略</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                                熟客力荐的保姆级楼层流转攻略。在垂直空间里，将美食、水烟与不同音乐风格的Club打通，不仅省去了夜间转场的奔波，还能根据心情在HUSH嘻哈和RADI电音之间自如横跳，是性价比极高的都市青年解压圣地。
+                            </p>
+                            <div class="xhs-footer">
+                                <div class="xhs-user"><i class="fa-solid fa-circle-user" style="color: var(--color-cyan);"></i> Miss碧琪</div>
+                                <div class="xhs-likes" style="color: var(--color-cyan);"><i class="fa-solid fa-heart"></i> 1.1w</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="xhs-card" style="border-color: rgba(0, 240, 255, 0.1); background: rgba(0, 240, 255, 0.01);">
+                        <div class="xhs-img-wrapper">
+                            <img src="static/xhs_pos_3.webp" alt="正面笔记3">
+                            <span class="xhs-tag" style="background: var(--color-cyan);">蹦迪实鉴/自由度高</span>
+                        </div>
+                        <div class="xhs-body">
+                            <h4 class="xhs-card-title">上海复兴公园 ins新乐园蹦迪攻略</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                                分享如何利用通票在手环凭证下进行无限次进出，在楼下公路商店或旁边大排档补充体力后再杀回舞池。这种极其自由和本土化的娱乐动线，硬控年轻人的蹦迪节奏。
+                            </p>
+                            <div class="xhs-footer">
+                                <div class="xhs-user"><i class="fa-solid fa-circle-user" style="color: var(--color-cyan);"></i> 武花花</div>
+                                <div class="xhs-likes" style="color: var(--color-cyan);"><i class="fa-solid fa-heart"></i> 9328</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 避坑 Grid -->
+                <div class="xhs-grid" id="xhs-negative-grid">
                     <div class="xhs-card">
                         <div class="xhs-img-wrapper">
-                            <img src="http://sns-webpic-qc.xhscdn.com/202606041109/5d35a8a3206936ad2a763b9b99bc63b2/1040g2sg315gcraaagqd04012osaqjd59phr7kdg!nc_n_webp_mw_1" alt="避雷笔记">
+                            <img src="static/xhs_neg_1.webp" alt="避雷笔记">
                             <span class="xhs-tag">劝退/排队避雷</span>
                         </div>
                         <div class="xhs-body">
@@ -1260,7 +1439,7 @@
 
                     <div class="xhs-card">
                         <div class="xhs-img-wrapper">
-                            <img src="http://sns-webpic-qc.xhscdn.com/202606041109/969df302c6e06700fe635c16395931c8/1040g2sg315gcraaagqd04012osaqjd59phr7kdg!nc_n_webp_mw_1" alt="蹦迪体验">
+                            <img src="static/xhs_neg_2.webp" alt="蹦迪体验">
                             <span class="xhs-tag">蹦迪实况</span>
                         </div>
                         <div class="xhs-body">
@@ -1277,24 +1456,7 @@
 
                     <div class="xhs-card">
                         <div class="xhs-img-wrapper">
-                            <img src="http://sns-webpic-qc.xhscdn.com/202606041109/f0f4cedcccc35ed5f0387f62bcabcd13/1040g00831mqp5cie6g0049vkv61chuv16ebneng!nc_n_webp_mw_1" alt="名流偶遇">
-                            <span class="xhs-tag">社会声量</span>
-                        </div>
-                        <div class="xhs-body">
-                            <h4 class="xhs-card-title">什么鬼运气，在INS新乐园碰到LVMH二公子</h4>
-                            <p style="font-size: 0.85rem; margin-bottom: 10px;">
-                                INS新乐园作为时尚地标，时常吸引海内外名流与顶流博主出没。但这也造成了该地标“网红打卡”色彩过重，部分普通青年感到社交压力和审美疲劳。
-                            </p>
-                            <div class="xhs-footer">
-                                <div class="xhs-user"><i class="fa-solid fa-circle-user"></i> Jellymama</div>
-                                <div class="xhs-likes"><i class="fa-solid fa-heart"></i> 745</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="xhs-card">
-                        <div class="xhs-img-wrapper">
-                            <img src="http://sns-webpic-qc.xhscdn.com/202606041109/0d6830e5194d8cf42c1076fdf6c6b0ea/notes_pre_post/1040g3k831rfv1lc600l0401efudm85lesaore0o!nc_n_webp_mw_1" alt="打卡攻略">
+                            <img src="static/xhs_neg_3.webp" alt="打卡攻略">
                             <span class="xhs-tag">打卡实况</span>
                         </div>
                         <div class="xhs-body">
@@ -1309,6 +1471,7 @@
                         </div>
                     </div>
                 </div>
+            </section>
             </section>
 
             <!-- 8. 经营数据 -->
@@ -1330,6 +1493,9 @@
                 </p>
                 <p>
                     <strong>3. 客流剧增：</strong> 2025 全年客流量较 2024 年大涨 <strong>80%</strong>，外地游客打卡比例提升至 <strong>60%</strong>，周末高峰期日均客流逼近 <strong>2 万人次</strong>。
+                </p>
+                <p>
+                    <strong>4. ESG与公益：</strong> 启动年营业额超 <strong>2% 捐赠</strong>的公益迎新计划，将时尚夜经济转化为正向社会公信力与品牌美誉度。
                 </p>
             </section>
 
@@ -1616,6 +1782,45 @@
                     }
                 }
             }, { passive: true });
+        }
+
+        // ------------------------------------------------------------- 
+        // 5. 小红书真实声量双向切换
+        // ------------------------------------------------------------- 
+        function toggleReviews(type) {
+            const posGrid = document.getElementById('xhs-positive-grid');
+            const negGrid = document.getElementById('xhs-negative-grid');
+            const btns = document.querySelectorAll('.review-tab-btn');
+            
+            if (type === 'positive') {
+                posGrid.classList.add('active-grid');
+                negGrid.classList.remove('active-grid');
+                btns[0].classList.add('active');
+                btns[0].style.background = 'linear-gradient(90deg, var(--color-cyan), var(--color-purple))';
+                btns[0].style.color = 'white';
+                btns[0].style.boxShadow = '0 0 10px rgba(0, 240, 255, 0.3)';
+                btns[0].style.borderColor = 'transparent';
+                
+                btns[1].classList.remove('active');
+                btns[1].style.background = 'rgba(255, 255, 255, 0.05)';
+                btns[1].style.color = 'var(--text-secondary)';
+                btns[1].style.boxShadow = 'none';
+                btns[1].style.borderColor = 'var(--border-color)';
+            } else {
+                posGrid.classList.remove('active-grid');
+                negGrid.classList.add('active-grid');
+                btns[1].classList.add('active');
+                btns[1].style.background = 'linear-gradient(90deg, var(--color-magenta), var(--color-purple))';
+                btns[1].style.color = 'white';
+                btns[1].style.boxShadow = '0 0 10px rgba(255, 0, 127, 0.3)';
+                btns[1].style.borderColor = 'transparent';
+                
+                btns[0].classList.remove('active');
+                btns[0].style.background = 'rgba(255, 255, 255, 0.05)';
+                btns[0].style.color = 'var(--text-secondary)';
+                btns[0].style.boxShadow = 'none';
+                btns[0].style.borderColor = 'var(--border-color)';
+            }
         }
     </script>
 </body>
