@@ -215,7 +215,7 @@
             min-height: 500px;
         }
 
-        /* SPA 选项卡样式：默认隐藏，激活时淡入 */
+        /* SPA 选项卡样式 */
         .content-area section {
             display: none;
             background: var(--bg-card);
@@ -412,80 +412,197 @@
             color: var(--text-secondary);
         }
 
-        /* 空间画廊排版 */
-        .gallery-container {
+        /* ------------------------------------------------------------- */
+        /* 手风琴折叠面板 (Accordion) 样式 */
+        /* ------------------------------------------------------------- */
+        .accordion-wrapper {
+            margin: 25px 0;
             display: flex;
             flex-direction: column;
-            gap: 30px;
-            margin: 20px 0;
+            gap: 12px;
         }
 
-        .gallery-category {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 15px;
-        }
-
-        .gallery-category-title {
-            font-size: 1.1rem;
-            color: var(--color-cyan);
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .photo-gallery {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .photo-card {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            aspect-ratio: 16/9;
+        .accordion-item {
             border: 1px solid rgba(255, 255, 255, 0.05);
-            background: #120b26;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.01);
+            overflow: hidden;
+            transition: border-color 0.3s;
         }
 
-        .photo-card img {
+        .accordion-header {
+            padding: 16px 20px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--color-cyan);
+        }
+
+        .accordion-header i {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+            padding: 0 20px;
+        }
+
+        .accordion-content p {
+            margin-bottom: 0;
+            padding: 15px 0;
+            font-size: 0.95rem;
+        }
+
+        /* 激活状态 */
+        .accordion-item.active {
+            border-color: rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.01);
+        }
+
+        .accordion-item.active .accordion-header {
+            color: var(--color-cyan);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .accordion-item.active .accordion-header i {
+            transform: rotate(180deg);
+            color: var(--color-cyan);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 400px;
+            transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+        }
+
+        /* ------------------------------------------------------------- */
+        /* 图片轮播图 (Carousel) 样式 */
+        /* ------------------------------------------------------------- */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: #080512;
+            margin: 25px 0;
+        }
+
+        .carousel-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            z-index: 1;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 2;
+        }
+
+        .carousel-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
         }
 
-        .photo-card:hover img {
-            transform: scale(1.08);
-        }
-
-        .photo-overlay {
+        .carousel-caption {
             position: absolute;
             bottom: 0; left: 0; right: 0;
-            background: linear-gradient(to top, rgba(8,5,18,0.95), transparent);
-            padding: 15px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            background: linear-gradient(to top, rgba(8,5,18,0.95) 0%, rgba(8,5,18,0.8) 60%, transparent 100%);
+            padding: 20px 24px;
+            z-index: 10;
         }
 
-        .photo-card:hover .photo-overlay {
-            opacity: 1;
-        }
-
-        .photo-title {
-            font-size: 0.9rem;
-            font-weight: 700;
+        .carousel-caption h4 {
             color: #fff;
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        .photo-desc {
-            font-size: 0.75rem;
+        .carousel-caption p {
             color: var(--color-cyan);
+            font-size: 0.8rem;
+            margin-bottom: 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
-        /* 公路商店引流卡片 */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(8, 5, 18, 0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: var(--color-purple);
+            border-color: transparent;
+            box-shadow: 0 0 10px var(--color-purple);
+        }
+
+        .prev-btn { left: 16px; }
+        .next-btn { right: 16px; }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 22px;
+            right: 24px;
+            display: flex;
+            gap: 8px;
+            z-index: 30;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: var(--color-cyan);
+            width: 18px;
+            border-radius: 4px;
+            box-shadow: 0 0 8px var(--color-cyan);
+        }
+
+        /* 公路商店卡片 */
         .road-shop-card {
             background: rgba(0, 240, 255, 0.02);
             border: 1px solid rgba(0, 240, 255, 0.1);
@@ -657,7 +774,7 @@
         }
 
         /* ------------------------------------------------------------- */
-        /* 移动端/手机端极致自适应框架 (重构为 SPA App 风格，杜绝水平和高度臃肿) */
+        /* 移动端/手机端极致自适应框架 (SPA App 风格) */
         /* ------------------------------------------------------------- */
         @media (max-width: 992px) {
             .hero {
@@ -761,14 +878,28 @@
                 margin-bottom: 18px;
             }
 
-            /* 强制重置网格列数，杜绝撑破溢出 */
-            .photo-gallery {
-                grid-template-columns: 1fr !important;
+            /* ------------------------------------------------------------- */
+            /* 手机端水平漏边卡片流 (Horizontal Card Flow)，杜绝竖排太长的问题 */
+            /* ------------------------------------------------------------- */
+            .xhs-grid, .units-grid {
+                display: flex !important;
+                grid-template-columns: none !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory;
+                gap: 14px;
+                padding: 4px 2px 16px 2px;
+                margin: 15px 0;
+                -webkit-overflow-scrolling: touch;
             }
 
-            .photo-card {
-                grid-column: span 1 !important; /* 强制所有图片占满单列 */
-                aspect-ratio: 16/10;
+            .xhs-grid::-webkit-scrollbar, .units-grid::-webkit-scrollbar {
+                display: none; /* 隐藏滚动条 */
+            }
+
+            .xhs-card, .unit-card {
+                flex: 0 0 82% !important; /* 宽度设为 82%，剩下 18% 漏出后面卡片边缘暗示横滑 */
+                scroll-snap-align: start;
+                margin-bottom: 0;
             }
 
             .road-shop-card {
@@ -786,23 +917,13 @@
                 grid-template-columns: 1fr !important;
             }
 
-            .xhs-grid {
-                grid-template-columns: 1fr !important;
-                gap: 15px;
-            }
-
-            .units-grid {
-                grid-template-columns: 1fr !important;
-                gap: 12px;
-            }
-
             .highlight-grid {
                 grid-template-columns: 1fr !important;
                 gap: 10px;
             }
 
             .chart-box {
-                height: 250px; /* 图表高度压缩，提升可视度 */
+                height: 250px; /* 图表高度压缩 */
                 padding: 8px;
             }
         }
@@ -820,7 +941,7 @@
         <div class="hero-content">
             <span class="tag-trend">城市更新 & 潮流新商业</span>
             <h1 class="hero-title">上海 INS 新乐园</h1>
-            <p class="hero-subtitle">区位、改建难点、产权机制及多媒体剖析 (SPA轻量版)</p>
+            <p class="hero-subtitle">区位、改建难点、产权机制及多媒体剖析 (移动适配版)</p>
         </div>
     </header>
 
@@ -873,7 +994,7 @@
                     <div class="unit-card">
                         <div class="unit-role">资本投资及协力方</div>
                         <div class="unit-name">BAI 资本 / 黄浦园林 / 腾讯游戏</div>
-                        <div class="unit-desc">BAI资本领投近3亿元A轮融资；黄浦园林作为国资资产平台协作；腾讯游戏提供赛事版权及内容支撑。</div>
+                        <div class="unit-desc">BAI资本领投近3亿元A轮融资；黄浦园林作为国资平台协作；腾讯游戏提供赛事版权支撑。</div>
                     </div>
                 </div>
             </section>
@@ -895,27 +1016,64 @@
                 </p>
             </section>
 
-            <!-- 3. 改建技术难点 -->
+            <!-- 3. 改建技术难点 (手风琴折叠面板，极致精炼) -->
             <section id="difficulty">
                 <h2 class="section-title"><i class="fa-solid fa-screwdriver-wrench"></i> 城市更新的五大改建技术难点</h2>
-                <p>
-                    该大楼的城市更新改建工程被华建集团列为高难度既有建筑改建项目，其施工与设计主要面临以下五重硬性红线：
+                <p style="margin-bottom: 15px;">
+                    该大楼的改建被华建集团列为高难度城市更新项目。点击下方各难点卡片，可展开阅读底层改建细节：
                 </p>
-                <p>
-                    <strong>一、历史风貌红线与立面克制：</strong> 项目位于衡复历史风貌区核心，外立面改建须严格符合《上海市优秀历史建筑保护条例》。项目初期曾重金邀请日本先锋建筑大师隈研吾（Kengo Kuma）进行全权概念设计，但其方案因过于前卫、与百年复兴公园古典法式风貌冲突而被否决。最终改用华东建筑设计院 (ECADI) 方案：保留了建筑经典的“三段式”古典构图，在极其收敛的立面框架中，只进行内部嵌入和材料置换，做到与公园环境和谐交融。
-                </p>
-                <p>
-                    <strong>二、超低层高与“微创掏空”加固：</strong> 原大楼为钱柜KTV的小包房分割钢筋混凝土结构，梁下净高极低（部分空间不足 2.8 米），且内部布满密集的承重立柱，根本无法直接匹配电竞赛馆和大型夜店所需的宽敞、无柱、挑高空间。设计院采用了在保留主框架前提下的“微创掏空加固”工艺，通过钢结构局部替换加固，剥离冗余楼板与立柱，巧妙掏出了挑高的电竞赛馆和多层中空大厅。
-                </p>
-                <p>
-                    <strong>三、极苛刻声学重载隔音（房中房技术）：</strong> 百年复兴公园周边密布居民区，而大楼内聚集了 HUSH、RADI、KEZEE（Livehouse）等高音量、重低音夜店。设计团队实施了国内最高标准的商业声学工程：采用全套“房中房”声学软悬浮隔振垫（防止震动经由柱体和基础传递）、双层高密度密闭阻尼隔音板墙和重型密封消音门，实现了多间重低音酒吧同处一楼且声音互不串音，且大楼外公园内环境音极低的极致效果。
-                </p>
-                <p>
-                    <strong>四、法式公园绿地微创施工限制：</strong> 复兴公园内有大量古树名木，绿化保护级别极高。改建期间，重型载重卡车和大型吊车根本无法开入公园内部施工，所有的建材、钢架、巨型设备运输都只能在狭窄的雁荡路路口小心翼翼地由人工或小型器械倒运，施工场地与运输半径受限极其严重。
-                </p>
-                <p>
-                    <strong>五、“交学费式”的高频动线反复：</strong> 面对前所未有的垂直夜店综合体（Club Hopping）概念，如何解决上千散客在不同楼层的快速穿梭与安全分流是巨大难题。项目在建设过程中经历了极高的试错成本，消防与人流动线设计方案反复推翻五六次，最终才通过合理设置多部重载电梯及环形防火疏散楼梯解决。
-                </p>
+                
+                <div class="accordion-wrapper">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>一、历史风貌红线与立面克制</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>项目位于衡复历史风貌区核心，外立面改建须严格符合《上海市优秀历史建筑保护条例》。项目初期曾重金邀请日本先锋建筑大师隈研吾（Kengo Kuma）进行全权概念设计，但其方案因过于前卫、与百年复兴公园古典法式风貌冲突而被否决。最终改用华东院方案：保留了建筑经典的“三段式”古典构图，在极其收敛的立面框架中，只进行内部嵌入和材料置换，做到与公园环境和谐交融。</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>二、超低层高与“微创掏空”加固</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>原大楼为钱柜KTV的小包房分割钢筋混凝土结构，梁下净高极低（部分空间不足 2.8 米），且内部布满密集的承重立柱，根本无法直接匹配电竞赛馆和大型夜店所需的宽敞、无柱、挑高空间。设计院采用了在保留主框架前提下的“微创掏空加固”工艺，通过钢结构局部替换加固，剥离冗余楼板与立柱，巧妙掏出了挑高的电竞赛馆和多层中空大厅。</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>三、极苛刻声学重载隔音（房中房技术）</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>百年复兴公园周边密布居民区，而大楼内聚集了 HUSH、RADI、KEZEE（Livehouse）等高音量、重低音夜店。设计团队实施了国内最高标准的商业声学工程：采用全套“房中房”声学软悬浮隔振垫（防止震动经由柱体和基础传递）、双层高密度密闭阻尼隔音板墙和重型密封消音门，实现了多间重低音酒吧同处一楼且声音互不串音，且大楼外公园内环境音极低的极致效果。</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>四、法式公园绿地微创施工限制</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>复兴公园内有大量古树名木，绿化保护级别极高。改建期间，重型载重卡车和大型吊车根本无法开入公园内部施工，所有的建材、钢架、巨型设备运输都只能在狭窄的雁荡路路口小心翼翼地由人工或小型器械倒运，施工场地与运输半径受限极其严重。</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>五、“交学费式”的高频动线反复</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>面对前所未有的垂直夜店综合体（Club Hopping）概念，如何解决上千散客在不同楼层的快速穿梭与安全分流是巨大难题。项目在建设过程中经历了极高的试错成本，消防与人流动线设计方案反复推翻五六次，最终才通过合理设置多部重载电梯及环形防火疏散楼梯解决。</p>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- 4. 垂直业态 -->
@@ -969,66 +1127,63 @@
                 </p>
             </section>
 
-            <!-- 6. 空间实景 -->
+            <!-- 6. 空间实景 (自适应图片轮播，压缩纵向高度) -->
             <section id="gallery">
                 <h2 class="section-title"><i class="fa-solid fa-images"></i> 空间设计实景 (真实图集)</h2>
-                <p>
-                    本报告精选收集了 INS 新乐园多维度的真实空间图片，覆盖外部、内部及活动现场三大核心圈层：
+                <p style="margin-bottom: 10px;">
+                    左右滑动或点击指示器切换浏览 INS 新乐园多层面的实景图像：
                 </p>
                 
+                <div class="carousel-wrapper">
+                    <div class="carousel-inner" id="carouselInner">
+                        <!-- 幻灯片 1 -->
+                        <div class="carousel-slide active">
+                            <img src="http://www.archina.com/uploadWX/20231114/655333d31dd83169995157111911.jpeg" alt="复兴广场INS新乐园外观鸟瞰">
+                            <div class="carousel-caption">
+                                <h4>外部：复兴广场（INS新乐园）宏观鸟瞰</h4>
+                                <p>ECADI操刀的历史风貌修缮与公园环境交融</p>
+                            </div>
+                        </div>
+                        <!-- 幻灯片 2 -->
+                        <div class="carousel-slide">
+                            <img src="http://www.archina.com/uploadWX/20231114/655333d330712169995157132090.jpeg" alt="DNF职业联赛电竞馆现场">
+                            <div class="carousel-caption">
+                                <h4>活动：B1F 电竞赛事职业现场 (DNF职业联赛)</h4>
+                                <p>英雄体育VSPO承办，代表项目的青年电竞赛事定位</p>
+                            </div>
+                        </div>
+                        <!-- 幻灯片 3 -->
+                        <div class="carousel-slide">
+                            <img src="https://loftcn.com/wp-content/uploads/2025/09/upperwood-1.jpg" alt="UPPERWOOD 真实实景">
+                            <div class="carousel-caption">
+                                <h4>内部：2F UPPERWOOD 共享休闲区</h4>
+                                <p>风化木材质营造的自然泥土质感美学</p>
+                            </div>
+                        </div>
+                        <!-- 幻灯片 4 -->
+                        <div class="carousel-slide">
+                            <img src="https://loftcn.com/wp-content/uploads/2025/09/upperwood-2.jpg" alt="侘寂餐座">
+                            <div class="carousel-caption">
+                                <h4>内部：2F 侘寂风餐座与光影细节</h4>
+                                <p>万谦集设计的大地艺术自省探索空间</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="carousel-btn prev-btn" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="carousel-btn next-btn" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></button>
+                    
+                    <div class="carousel-dots" id="carouselDots">
+                        <span class="dot active" data-index="0"></span>
+                        <span class="dot" data-index="1"></span>
+                        <span class="dot" data-index="2"></span>
+                        <span class="dot" data-index="3"></span>
+                    </div>
+                </div>
+
                 <div class="gallery-container">
-                    <!-- 维度 1: 外部宏观 -->
-                    <div class="gallery-category">
-                        <div class="gallery-category-title"><i class="fa-solid fa-city"></i> 维度一：外部宏观建筑鸟瞰 (华建项目图)</div>
-                        <div class="photo-gallery">
-                            <div class="photo-card" style="aspect-ratio: 16/9; grid-column: span 2;">
-                                <img src="http://www.archina.com/uploadWX/20231114/655333d31dd83169995157111911.jpeg" alt="复兴广场INS新乐园外观鸟瞰">
-                                <div class="photo-overlay">
-                                    <div class="photo-title">百年复兴公园内的复兴广场（INS新乐园）宏观鸟瞰</div>
-                                    <div class="photo-desc">ECADI（华东院）负责的立面与风貌修复实景</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 维度 2: 活动现场 -->
-                    <div class="gallery-category">
-                        <div class="gallery-category-title"><i class="fa-solid fa-gamepad"></i> 维度二：B1F 电竞赛事与职业现场 (活动场面)</div>
-                        <div class="photo-gallery">
-                            <div class="photo-card" style="aspect-ratio: 16/9; grid-column: span 2;">
-                                <img src="http://www.archina.com/uploadWX/20231114/655333d330712169995157132090.jpeg" alt="DNF职业联赛电竞馆现场">
-                                <div class="photo-overlay">
-                                    <div class="photo-title">B1层电竞馆职业赛事现场（DNF职业联赛实况）</div>
-                                    <div class="photo-desc">英雄体育VSPO承办，代表着项目青年电竞文化定位的活动画卷</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 维度 3: 内部细节 -->
-                    <div class="gallery-category">
-                        <div class="gallery-category-title"><i class="fa-solid fa-glass-water"></i> 维度三：2F 内部设计质感 (UPPERWOOD 侘寂美学)</div>
-                        <div class="photo-gallery">
-                            <div class="photo-card">
-                                <img src="https://loftcn.com/wp-content/uploads/2025/09/upperwood-1.jpg" alt="UPPERWOOD 真实实景">
-                                <div class="photo-overlay">
-                                    <div class="photo-title">UPPERWOOD 内部共享休闲空间</div>
-                                    <div class="photo-desc">风化木质调与烟雾营造的泥土大地感</div>
-                                </div>
-                            </div>
-                            <div class="photo-card">
-                                <img src="https://loftcn.com/wp-content/uploads/2025/09/upperwood-2.jpg" alt="UPPERWOOD 真实实景">
-                                <div class="photo-overlay">
-                                    <div class="photo-title">侘寂风格餐座细节</div>
-                                    <div class="photo-desc">大地艺术收集概念的体现</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 维度 4: 标志性街景 -->
-                    <div class="gallery-category">
-                        <div class="gallery-category-title"><i class="fa-solid fa-store"></i> 维度四：1F 标志性品牌 (公路商店街头社交)</div>
+                    <div class="gallery-category" style="border: none;">
+                        <div class="gallery-category-title"><i class="fa-solid fa-store"></i> 维度四：1F 标志性品牌 (公路商店)</div>
                         <div class="road-shop-card">
                             <div class="road-shop-icon"><i class="fa-solid fa-beer-mug-empty"></i></div>
                             <div>
@@ -1042,11 +1197,11 @@
                 </div>
             </section>
 
-            <!-- 7. 小红书避雷与实况 -->
+            <!-- 7. 小红书避雷与实况 (手机端横向滑边卡片流) -->
             <section id="xhs-reviews">
                 <h2 class="section-title"><i class="fa-solid fa-comments"></i> 小红书真实检索与差评避雷分析</h2>
                 <p>
-                    我们通过用户授权注入的小红书 Cookie，调用 `xhs_cli` SDK 客户端，精准搜索了关于 INS 新乐园的吐槽与反馈：
+                    我们通过用户授权注入的小红书 Cookie，调用 `xhs_cli` SDK 客户端，精准搜索了关于 INS 新乐园的吐槽与反馈（手机端可横向左右滑动卡片）：
                 </p>
                 
                 <div class="xhs-grid">
@@ -1195,13 +1350,15 @@
         </div>
     </div>
 
-    <!-- JS 逻辑控制 SPA 切换与图表自适应按需加载 -->
+    <!-- JS 逻辑控制 SPA 切换、手风琴折叠、图片轮播与图表自适应按需加载 -->
     <script>
+        // ------------------------------------------------------------- 
+        // 1. Chart.js 延迟按需初始化
+        // ------------------------------------------------------------- 
         let myChart = null;
 
-        // 初始化 Chart.js
         function initChart() {
-            if (myChart) return; // 避免重复创建
+            if (myChart) return; 
             const canvas = document.getElementById('trafficChart');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -1265,7 +1422,9 @@
             });
         }
 
-        // SPA 选项卡切换核心逻辑
+        // ------------------------------------------------------------- 
+        // 2. SPA 选项卡切换核心逻辑
+        // ------------------------------------------------------------- 
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.content-area section');
 
@@ -1274,22 +1433,20 @@
                 e.preventDefault();
                 const targetId = link.getAttribute('data-target');
                 
-                // 1. 切换导航链接高亮
                 navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
 
-                // 2. 切换内容板块显示
                 sections.forEach(sec => sec.classList.remove('active-section'));
                 const targetSection = document.getElementById(targetId);
                 if (targetSection) {
                     targetSection.classList.add('active-section');
                 }
 
-                // 3. 在移动端下切换分类时，页面平滑滚动置顶，确保用户能从头阅读
+                // 切换后，页面平滑滚动置顶，扣除顶部导航高度
                 if (window.innerWidth <= 992) {
                     const containerTop = document.querySelector('.content-area').offsetTop;
                     window.scrollTo({
-                        top: containerTop - 70, // 扣除悬浮导航高度
+                        top: containerTop - 70, 
                         behavior: 'smooth'
                     });
                 } else {
@@ -1299,7 +1456,7 @@
                     });
                 }
 
-                // 4. 特殊陷阱修复：如果是经营数据分类，延迟初始化 Chart.js，规避 display:none 导致宽度折零的问题
+                // 若是经营数据，延迟初始化图表以获取真实父宽度
                 if (targetId === 'data') {
                     requestAnimationFrame(() => {
                         setTimeout(initChart, 100);
@@ -1308,7 +1465,7 @@
             });
         });
 
-        // 绑定移动端横滑菜单的点击居中效果 (增强体验)
+        // 移动端横滑菜单自动选中居中
         const navList = document.querySelector('.nav-list');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -1323,6 +1480,89 @@
                 }
             });
         });
+
+        // ------------------------------------------------------------- 
+        // 3. 手风琴折叠面板 (Accordion) 逻辑
+        // ------------------------------------------------------------- 
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // 折叠所有其他项
+                document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+                
+                // 如果之前未激活，则激活当前项
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        // 默认激活第一项
+        if(document.querySelector('.accordion-item')) {
+            document.querySelector('.accordion-item').classList.add('active');
+        }
+
+        // ------------------------------------------------------------- 
+        // 4. 图片轮播图 (Carousel) 逻辑
+        // ------------------------------------------------------------- 
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else if (index >= slides.length) {
+                currentSlide = 0;
+            } else {
+                currentSlide = index;
+            }
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        if(prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+            nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const idx = parseInt(dot.getAttribute('data-index'));
+                showSlide(idx);
+            });
+        });
+
+        // 支持手势滑动 (Touch Events) 移动端轮播图滑动适配
+        const carouselWrapper = document.querySelector('.carousel-wrapper');
+        if (carouselWrapper) {
+            let startX = 0;
+            let endX = 0;
+
+            carouselWrapper.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+
+            carouselWrapper.addEventListener('touchend', (e) => {
+                endX = e.changedTouches[0].clientX;
+                const diff = startX - endX;
+                if (Math.abs(diff) > 50) { // 滑动阀值 50px
+                    if (diff > 0) {
+                        showSlide(currentSlide + 1); // 向左滑，下一张
+                    } else {
+                        showSlide(currentSlide - 1); // 向右滑，上一张
+                    }
+                }
+            }, { passive: true });
+        }
     </script>
 </body>
 </html>
