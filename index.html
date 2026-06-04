@@ -665,48 +665,91 @@
         }
 
         /* 移动端自适应设计：使导航栏变成横向滚动条，提高易用性 */
+        /* 移动端自适应设计：彻底优化手机端排版，杜绝宽度溢出 */
         @media (max-width: 992px) {
+            .hero {
+                height: 35vh; /* 手机端减小封面大图高度 */
+            }
+            .hero-title {
+                font-size: 1.6rem; /* 减小标题字体 */
+            }
+            .hero-subtitle {
+                font-size: 0.85rem; /* 减小副标题 */
+                letter-spacing: 1px;
+            }
             .app-container {
                 grid-template-columns: 1fr;
-                padding: 20px 10px;
-                gap: 20px;
+                padding: 10px 8px;
+                gap: 15px;
             }
             .sidebar {
                 position: sticky;
                 top: 0;
                 z-index: 100;
-                margin-bottom: 10px;
+                margin-bottom: 5px;
             }
             .nav-card {
-                padding: 12px;
-                border-radius: 12px;
+                padding: 8px;
+                border-radius: 10px;
             }
             .nav-card h3 {
-                display: none; /* 手机端隐藏导航标题 */
+                display: none;
             }
             .nav-list {
                 display: flex;
                 overflow-x: auto;
                 white-space: nowrap;
-                gap: 8px;
-                padding-bottom: 5px;
+                gap: 6px;
+                padding-bottom: 4px;
             }
             .nav-item {
                 margin-bottom: 0;
             }
             .nav-link {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-            }
-            .photo-gallery {
-                grid-template-columns: 1fr; /* 手机端图片单栏排列 */
+                padding: 6px 10px;
+                font-size: 0.8rem;
             }
             .section-card {
-                padding: 20px;
+                padding: 20px 15px; /* 减小内边距 */
+                border-radius: 14px;
+            }
+            .section-title {
+                font-size: 1.4rem;
+            }
+            .photo-gallery {
+                grid-template-columns: 1fr !important; /* 单列排版 */
+            }
+            .photo-card {
+                grid-column: span 1 !important; /* 强制覆盖原本的 grid-column: span 2 内联样式 */
+                aspect-ratio: 16/10; /* 微调比例 */
             }
             .road-shop-card {
                 flex-direction: column;
                 text-align: center;
+                gap: 10px;
+                padding: 15px;
+            }
+            .road-shop-icon {
+                font-size: 2rem;
+            }
+            .video-grid {
+                grid-template-columns: 1fr !important; /* 视频单列，杜绝 minmax 撑爆 */
+            }
+            .chart-box {
+                height: 260px; /* 手机端降低图表高度 */
+                padding: 10px;
+            }
+            .highlight-grid {
+                grid-template-columns: 1fr; /* 经营数据指标单列 */
+                gap: 10px;
+            }
+            .xhs-grid {
+                grid-template-columns: 1fr !important; /* 小红书单列 */
+                gap: 15px;
+            }
+            .units-grid {
+                grid-template-columns: 1fr !important; /* 单位列表单列 */
+                gap: 10px;
             }
         }
     </style>
