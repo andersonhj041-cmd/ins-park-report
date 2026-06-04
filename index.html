@@ -972,7 +972,7 @@
                     <strong>上海 INS 新乐园</strong>（又名 INS 复兴·乐园，前身即著名的复兴广场），座落于上海市黄浦区雁荡路109号复兴公园东侧，处于<strong>衡复历史文化风貌区</strong>核心区。该地块原址为上世纪90年代起风靡上海的“钱柜 KTV 大楼”及周边配套设施，建筑面积约 <strong>2 万平方米</strong>，地上 6 层，地下 1 层。
                 </p>
                 <p>
-                    <strong>黄金区位三角与物理边界：</strong> 项目地理位置极其特殊。它深嵌于百年法式风貌公园——复兴公园内，东接雁荡路休闲步行街，南临思南路与思南公馆，北侧距淮海中路核心高档商圈仅两百米之遥。这种“身处公园绿地内、紧邻风貌风情街区、直通顶级商圈”的独特地理格局，为其创造了独一无二的文旅磁场。然而，**衡复风貌保护区的严格限制**也带来极大的物理红线约束：狭窄的历史道路和步行街特征，导致其夜间数万人流的交通疏散和物资装卸（特别是夜店大体量的酒水和设备运输）空间极其狭窄。
+                    <strong>黄金区位三角与物理边界：</strong> 项目地理位置极其特殊。它深嵌于百年法式风貌公园——复兴公园内，东接雁荡路休闲步行街，南临思南路与思南公馆，北侧距淮海中路核心高档商圈仅两百米之遥。这种“身处公园绿地内、紧邻风貌风情街区、直通顶级商圈”的独特地理格局，为其创造了独一无二的文旅磁场。然而，**衡复风貌保护区的严格限制**也带来极大的物理红线约束：狭窄的历史道路 and 步行街特征，导致其夜间数万人流的交通疏散和物资装卸（特别是夜店大体量的酒水和设备运输）空间极其狭窄。
                 </p>
                 
                 <div class="units-grid">
@@ -1428,58 +1428,74 @@
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.content-area section');
 
+        function switchTab(targetId) {
+            const link = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+            const targetSection = document.getElementById(targetId);
+            if (!link || !targetSection) return;
+
+            // 1. 切换导航高亮
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            // 2. 切换内容板块显示
+            sections.forEach(sec => sec.classList.remove('active-section'));
+            targetSection.classList.add('active-section');
+
+            // 3. 在移动端下切换分类时，页面平滑滚动置顶
+            if (window.innerWidth <= 992) {
+                const containerTop = document.querySelector('.content-area').offsetTop;
+                window.scrollTo({
+                    top: containerTop - 70, 
+                    behavior: 'smooth'
+                });
+            } else {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+
+            // 4. 横滑菜单自动选中居中
+            if (window.innerWidth <= 992) {
+                const navList = document.querySelector('.nav-list');
+                const linkLeft = link.offsetLeft;
+                const linkWidth = link.offsetWidth;
+                const listWidth = navList.offsetWidth;
+                navList.scrollTo({
+                    left: linkLeft - (listWidth / 2) + (linkWidth / 2),
+                    behavior: 'smooth'
+                });
+            }
+
+            // 5. 延迟初始化图表
+            if (targetId === 'data') {
+                requestAnimationFrame(() => {
+                    setTimeout(initChart, 100);
+                });
+            }
+        }
+
+        // 点击导航仅修改 URL hash，由 hashchange 事件统一驱动视图更新
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('data-target');
-                
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-
-                sections.forEach(sec => sec.classList.remove('active-section'));
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.classList.add('active-section');
-                }
-
-                // 切换后，页面平滑滚动置顶，扣除顶部导航高度
-                if (window.innerWidth <= 992) {
-                    const containerTop = document.querySelector('.content-area').offsetTop;
-                    window.scrollTo({
-                        top: containerTop - 70, 
-                        behavior: 'smooth'
-                    });
-                } else {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                }
-
-                // 若是经营数据，延迟初始化图表以获取真实父宽度
-                if (targetId === 'data') {
-                    requestAnimationFrame(() => {
-                        setTimeout(initChart, 100);
-                    });
-                }
+                window.location.hash = targetId;
             });
         });
 
-        // 移动端横滑菜单自动选中居中
-        const navList = document.querySelector('.nav-list');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 992) {
-                    const linkLeft = link.offsetLeft;
-                    const linkWidth = link.offsetWidth;
-                    const listWidth = navList.offsetWidth;
-                    navList.scrollTo({
-                        left: linkLeft - (listWidth / 2) + (linkWidth / 2),
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+        // 统一监听 Hash 变更
+        function handleHashChange() {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                switchTab(hash);
+            } else {
+                switchTab('bg'); // 默认展示背景
+            }
+        }
+
+        window.addEventListener('load', handleHashChange);
+        window.addEventListener('hashchange', handleHashChange);
 
         // ------------------------------------------------------------- 
         // 3. 手风琴折叠面板 (Accordion) 逻辑
@@ -1554,11 +1570,11 @@
             carouselWrapper.addEventListener('touchend', (e) => {
                 endX = e.changedTouches[0].clientX;
                 const diff = startX - endX;
-                if (Math.abs(diff) > 50) { // 滑动阀值 50px
+                if (Math.abs(diff) > 50) { 
                     if (diff > 0) {
-                        showSlide(currentSlide + 1); // 向左滑，下一张
+                        showSlide(currentSlide + 1); 
                     } else {
-                        showSlide(currentSlide - 1); // 向右滑，上一张
+                        showSlide(currentSlide - 1); 
                     }
                 }
             }, { passive: true });
